@@ -1,5 +1,5 @@
 module.exports = {
-  HOST: 'localhost',
+  HOST: process.env.MONGODB_HOST || 'localhost',
   PORT: 27017,
-  DB: 'authdb'
+  DB: process.env.MONGODB_DB ||'authdb'
 }

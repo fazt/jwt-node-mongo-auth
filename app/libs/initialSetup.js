@@ -1,41 +1,26 @@
 const db = require("../models");
 const Role = db.role;
 
-const initalSetup = () => {
-  Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      console.log('count is: ', count)
-      new Role({
-        name: "user",
-      }).save((err) => {
-        if (err) {
-          console.log("error", err);
-        }
+const initalSetup = async () => {
+  const count = await Role.estimatedDocumentCount();
+  if (count === 0) {
+    console.log("count is: ", count);
 
-        console.log("added 'user' to roles collection");
-      });
+    await new Role({
+      name: "user",
+    }).save();
+    console.log("added 'user' to roles collection");
 
-      new Role({
-        name: "moderator"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
+    new Role({
+      name: "moderator",
+    }).save();
+    console.log("added 'moderator' to roles collection");
 
-        console.log("added 'moderator' to roles collection");
-      });
-
-      new Role({
-        name: "admin"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("added 'admin' to roles collection");
-      });
-    }
-  });
+    new Role({
+      name: "admin",
+    }).save();
+    console.log("added 'admin' to roles collection");
+  }
 };
 
 module.exports = initalSetup;
